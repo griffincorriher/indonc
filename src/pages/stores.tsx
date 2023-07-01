@@ -2,8 +2,9 @@ import Head from "next/head";
 import SimpleMap from "~/components/SimpleMap";
 import { api } from "~/utils/api";
 import { useUser, UserButton } from "@clerk/nextjs"
+import WantToAdd from "~/components/WantToAdd";
 
-export default function Home() {
+export default function Stores() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   
   return (
@@ -16,8 +17,7 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center bg-red-200">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            IndonesiansNC.com
-            <SimpleMap />
+            <WantToAdd />
           </h1>
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}

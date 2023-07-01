@@ -8,7 +8,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ClerkProvider {...pageProps}>
       <NavBar />
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ClerkProvider>
   )
 };
