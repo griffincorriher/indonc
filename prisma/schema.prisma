@@ -11,8 +11,35 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
+model User {
+    id           String   @id @default(cuid())
+    joinDate     DateTime @default(now())
+    county       String
+    displayName  String
+    email        String
+    phone        String
+    facebook     String
+    newUser      Boolean
+}
+model Store {
     id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    county    String
+    name      String
+    address   String
+    product   Product[]
+}
+
+model Product {
+    id          String   @id @default(cuid())
+    productId   String
+    name        String
+    description String
+    storeId     String
+    store       Store @relation(fields: [storeId], references: [id])
+}
+model County {
+    id          String   @id @default(cuid())
+    name String
+    lat String
+    lon String  
 }
