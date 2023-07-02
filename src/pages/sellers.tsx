@@ -19,6 +19,9 @@ export default function Sellers() {
           <p className="text-2xl text-black">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
+          <p>
+            Youre on the sellers page
+          </p>
         </div>
       </main>
     </>
