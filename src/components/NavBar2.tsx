@@ -10,7 +10,7 @@ export function NavBar2() {
       <div className="flex h-16 items-center justify-between">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <img className="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+            IndoNC logo
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
@@ -24,7 +24,7 @@ export function NavBar2() {
           <div className="ml-4 flex items-center md:ml-6">
             <div className="relative ml-3">
             {!user.isSignedIn && (
-                <div>
+                <div className="text-gray-50 text-sm font-medium">
                     <SignInButton />
                 </div>
             )}
@@ -67,7 +67,7 @@ export function NavBar2() {
 
   <header className="bg-white shadow">
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900 capitalize">Hi {user.user?.firstName}!</h1>
     </div>
   </header>
 </div>
