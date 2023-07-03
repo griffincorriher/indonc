@@ -5,7 +5,13 @@ import { SellerItemCard } from "~/components/SellerItemCard";
 
 const SellerProfile: NextPage = () => {
     const router = useRouter();
-
+    const seller = api.sellers.get.useQuery(
+      {
+      sellerId: router.query.id as string,
+      }, {
+      enabled: !!router.query.id,
+      }
+    );
     return (
         <>
         <Head>

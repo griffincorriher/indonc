@@ -2,44 +2,46 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id           String   @id @default(cuid())
-    joinDate     DateTime @default(now())
-    county       String
-    displayName  String
-    email        String
-    phone        String
-    facebook     String
-    newUser      Boolean
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  joinDate    DateTime @default(now())
+  countyName  String  
+  displayName String
+  email       String
+  phone       String
+  facebook    String
+  seller      Seller?  
 }
-model Store {
-    id        String   @id @default(cuid())
-    county    String
-    name      String
-    address   String
-    product   Product[]
+
+model Seller {
+  id       String    @id @default(cuid())
+  user     User      @relation(fields: [userId], references: [userId])
+  userId   String    @unique
+  products Product[]
 }
 
 model Product {
-    id          String   @id @default(cuid())
-    productId   String
-    name        String
-    description String
-    storeId     String
-    store       Store @relation(fields: [storeId], references: [id])
+  id       String   @id @default(cuid())
+  productId   String
+  name     String
+  description String
+  pictureUrl    String
+  price    Float
+  sellers  Seller[]
 }
 model County {
-    id          String   @id @default(cuid())
-    name String
-    lat String
-    lon String  
+  id   String @id @default(cuid())
+  name String 
+  lat  String
+  lon  String
 }
