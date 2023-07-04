@@ -15,33 +15,43 @@ model User {
   id          String   @id @default(cuid())
   userId      String   @unique
   joinDate    DateTime @default(now())
-  countyName  String  
   displayName String
   email       String
   phone       String
   facebook    String
-  seller      Seller?  
+  seller      Seller? 
+  county      County   @relation(fields: [countyId], references: [id])
+  countyId    String   
 }
 
 model Seller {
-  id       String    @id @default(cuid())
-  user     User      @relation(fields: [userId], references: [userId])
-  userId   String    @unique
-  products Product[]
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [userId])
+  userId      String    @unique
+  products    Product[]
 }
-
+model Store {
+  id          String    @id @default(cuid())
+  storeId     String @unique
+  products    Product[]
+  county      County   @relation(fields: [countyId], references: [id])
+  countyId    String   @unique
+}
 model Product {
-  id       String   @id @default(cuid())
-  productId   String
-  name     String
-  description String
+  id            String   @id @default(cuid())
+  productId     String
+  name          String
+  description   String
   pictureUrl    String
-  price    Float
-  sellers  Seller[]
+  price         Float
+  sellers       Seller[]
+  stores        Store[]
 }
 model County {
-  id   String @id @default(cuid())
-  name String 
-  lat  String
-  lon  String
+  id           String @id @default(cuid())
+  name         String @unique
+  lat          Float
+  lon          Float
+  user         User[]
+  store        Store[]
 }

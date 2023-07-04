@@ -1,6 +1,11 @@
-import { User } from "@clerk/nextjs/dist/types/server";
 import { useUser } from "@clerk/nextjs";
-export function SellerProfileCard() {
+
+interface SellerProps {
+    name: string;
+    county: string;
+
+  }
+export function SellerCard({ name, county}: SellerProps) {
     const user = useUser();
     const url = user.user?.id
     return (  
@@ -24,14 +29,14 @@ export function SellerProfileCard() {
                     </ul>
                 </div>
             </div>
-            <div className="flex flex-col items-center pb-10">
+            <div className="flex flex-col items-center pb-6">
                 <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={user.user?.profileImageUrl} alt={`${user.user?.fullName} image`}/>
-                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white capitalize">{user.user?.fullName}</h5>
-                <span className="text-sm text-gray-500 dark:text-gray-400">Salisbury, Rowan County</span>
-                <div className="flex flex-col mt-4 space-x-3 md:mt-6">
+                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white capitalize pl-4">{name}</h5>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{county} County</span>
+                <div className="flex flex-col mt-4 mb-0 space-x-3 md:mt-6 ">
                     <div className="flex flex-row justify-between">
-                        <a href={`/sellers/${url}`} className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">View items</a>
-                        <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Message</a>
+                        <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Profile</button>
+                        <button type="button" className="text-gray-900 bg-gray-100 border hover:bg-blue-800 hover:text-gray-50 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-4 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Products</button>
                     </div>
                 </div>
             </div>

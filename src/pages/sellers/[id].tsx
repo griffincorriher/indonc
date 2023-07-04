@@ -1,17 +1,19 @@
 import { type NextPage } from "next"
 import { useRouter } from "next/router"
 import Head from "next/head";
-import { SellerItemCard } from "~/components/SellerItemCard";
+import { ProductCard} from "~/components/ProductCard";
 
 const SellerProfile: NextPage = () => {
     const router = useRouter();
-    const seller = api.sellers.get.useQuery(
-      {
-      sellerId: router.query.id as string,
-      }, {
-      enabled: !!router.query.id,
-      }
-    );
+    const { seller } = router.query
+
+//    const seller = api.sellers.get.useQuery(
+//      {
+ //     sellerId: router.query.id as string,
+//      }, {
+///     enabled: !!router.query.id,
+//      }
+//    );
     return (
         <>
         <Head>
@@ -20,7 +22,9 @@ const SellerProfile: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="flex min-h-screen flex-col items-center justify-first bg-zinc-100">
-            <SellerItemCard />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 p-4">
+            <ProductCard />
+          </div>
         </main>
       </>
       )}
