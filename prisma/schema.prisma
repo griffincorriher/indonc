@@ -11,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Member {
   id          String   @id @default(cuid())
   userId      String   @unique
   joinDate    DateTime @default(now())
@@ -19,23 +19,16 @@ model User {
   email       String
   phone       String
   facebook    String
-  seller      Seller? 
-  county      County   @relation(fields: [countyId], references: [id])
-  countyId    String   
-}
-
-model Seller {
-  id          String    @id @default(cuid())
-  user        User      @relation(fields: [userId], references: [userId])
-  userId      String    @unique
-  products    Product[]
+  countyId    County   @relation(fields: [countyName], references: [name])
+  countyName  String  
+  products    Product[] 
 }
 model Store {
-  id          String    @id @default(cuid())
-  storeId     String @unique
-  products    Product[]
-  county      County   @relation(fields: [countyId], references: [id])
-  countyId    String   @unique
+  id            String   @id @default(cuid())
+  storeId       String   @unique
+  countyId      County   @relation(fields: [countyName], references: [name])
+  countyName    String   @unique
+  products      Product[]
 }
 model Product {
   id            String   @id @default(cuid())
@@ -44,7 +37,7 @@ model Product {
   description   String
   pictureUrl    String
   price         Float
-  sellers       Seller[]
+  members       Member[]
   stores        Store[]
 }
 model County {
@@ -52,6 +45,6 @@ model County {
   name         String @unique
   lat          Float
   lon          Float
-  user         User[]
-  store        Store[]
+  members      Member[]
+  stores       Store[]
 }

@@ -1,15 +1,13 @@
+import { type NextPage } from "next";
 import Head from "next/head";
-import { Card } from "~/components/Card";
-import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 import { SellerCard } from "~/components/SellerCard";
-export default function Sellers() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  
-  const user1 = {name: "Griffin Corriher", county: "Rowan"}
-  const user2 = {name: "Siti Nurharyati", county: "Allamance"}
-  const user3 = {name: "Dilan Pawiro Corriher", county: "Mecklemburg"}
+import { api } from "~/utils/api";
 
-
+const Sellers: NextPage = () => {
+  const router = useRouter();
+  const sellers = api.sellers.list.useQuery();
+  console.log(router.query.id)
   return (
     <>
       <Head>
@@ -19,13 +17,13 @@ export default function Sellers() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-first bg-zinc-100">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 p-4">
-            <SellerCard {...user1}/>
-            <SellerCard {...user2}/>
-            <SellerCard {...user3}/>
-            <SellerCard {...user1}/>
-
-          </div>
-        </main>
+          {sellers?.data?.map((seller) => (
+            <SellerCard key={seller.userId} seller={seller}/>
+          ))}
+        </div>
+      </main>
     </>
   );
-}
+};
+
+export default Sellers;

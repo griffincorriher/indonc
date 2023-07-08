@@ -1,13 +1,6 @@
-import { useUser } from "@clerk/nextjs";
-
-interface SellerProps {
-    name: string;
-    county: string;
-
-  }
-export function SellerCard({ name, county}: SellerProps) {
-    const user = useUser();
-    const url = user.user?.id
+import { type Member } from "@prisma/client";
+import Link from "next/link";
+export function SellerCard({ seller }: {seller: Member}) {
     return (  
         <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div className="flex justify-end px-4 pt-4">
@@ -30,13 +23,17 @@ export function SellerCard({ name, county}: SellerProps) {
                 </div>
             </div>
             <div className="flex flex-col items-center pb-6">
-                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={user.user?.profileImageUrl} alt={`${user.user?.fullName} image`}/>
-                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white capitalize pl-4">{name}</h5>
-                <span className="text-sm text-gray-500 dark:text-gray-400">{county} County</span>
+                <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={seller.displayName} alt={`${seller.displayName} image`}/>
+                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white capitalize pl-4">{seller.displayName}</h5>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{seller.countyName} County</span>
                 <div className="flex flex-col mt-4 mb-0 space-x-3 md:mt-6 ">
                     <div className="flex flex-row justify-between">
-                        <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Profile</button>
-                        <button type="button" className="text-gray-900 bg-gray-100 border hover:bg-blue-800 hover:text-gray-50 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-4 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Products</button>
+                        <Link href={`/sellers/${seller.id}/profile`}>
+                            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-4 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Profile</button>
+                        </Link>
+                        <Link href={`/sellers/${seller.id}/products`}>
+                            <button type="button" className="text-gray-900 bg-gray-100 border hover:bg-blue-800 hover:text-gray-50 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-4 ml-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">View Products</button>
+                        </Link>
                     </div>
                 </div>
             </div>
