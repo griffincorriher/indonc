@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { ProductCard } from "~/components/ProductCard";
+import { Spinner } from "~/components/Spinner";
 
-const SellerView: NextPage = () => {
+const ProductsView: NextPage = () => {
   const router = useRouter();
 
-  const seller = api.sellers.get.useQuery(
+  const productsQuery = api.products.get.useQuery(
     {
       memberId: router.query.id as string,
     },
@@ -18,11 +18,22 @@ const SellerView: NextPage = () => {
       enabled: !!router.query.id,
     }
   );
+  const sellerProducts = productsQuery.data;
 
-  const sellerItem = seller.data;
+  if (!sellerProducts) {
+    return (
+      <div className="flex items-center justify-center">
+        No products found.
+      </div>
+    )
+  }
 
-  if (!sellerItem) {
-    return null;
+  if (productsQuery.isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Spinner />
+      </div>
+      )
   }
 
   return (
@@ -33,11 +44,14 @@ const SellerView: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-first bg-zinc-100">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 p-4">
-            <ProductCard />
-          </div>
-        </main>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 p-4">
+          {sellerProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </main>
     </>
   );
 };
-export default SellerView;
+
+export default ProductsView;

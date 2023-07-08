@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 const Sellers: NextPage = () => {
   const router = useRouter();
   const sellers = api.sellers.list.useQuery();
-  console.log(router.query.id)
+
   return (
     <>
       <Head>
