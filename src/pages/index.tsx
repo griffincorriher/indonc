@@ -1,11 +1,17 @@
+import { useState } from "react";
 import Head from "next/head";
 import { api } from "~/utils/api";
 import { MapListSelect } from "~/components/MapListSelect";
 import ProductMapView from "~/components/ProductMapView";
+import { ProductListView } from "~/components/ProductListView";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  
+  const [view, setView] = useState<"map" | "list">("map");
+
+  const handleViewChange = (selectedView: "map" | "list") => {
+    setView(selectedView);
+  };
+
   return (
     <>
       <Head>
@@ -15,14 +21,8 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-start bg-zinc-100">
         <div className="container flex flex-col items-center justify-start gap-12 px-4 py-8 ">
-          <MapListSelect />
-          <ProductMapView />
-          <h1 className="text-5xl font-extrabold tracking-tight text-slate-800 sm:text-[5rem]">
-            ok
-          </h1>
-          <p className="text-2xl text-slate-800">
-            {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-          </p>
+          <MapListSelect onViewChange={handleViewChange} />
+          {view === "map" ? <ProductMapView /> : <ProductListView />}
         </div>
       </main>
     </>

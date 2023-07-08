@@ -15,9 +15,7 @@ model Member {
   id          String   @id @default(cuid())
   userId      String   @unique
   joinDate    DateTime @default(now())
-  displayName String
-  email       String
-  phone       String
+  clerkUserId String
   facebook    String
   countyId    County   @relation(fields: [countyName], references: [name])
   countyName  String  
