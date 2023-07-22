@@ -4,6 +4,9 @@ import { api } from "~/utils/api";
 import { MapListSelect } from "~/components/MapListSelect";
 import ProductMapView from "~/components/ProductMapView";
 import { ProductListView } from "~/components/ProductListView";
+import { useUser } from "@clerk/nextjs";
+import SignedOutProductMapView from "~/components/SignedOutProductMapView";
+
 
 export default function Home() {
   const [view, setView] = useState<"map" | "list">("map");
@@ -11,6 +14,7 @@ export default function Home() {
   const handleViewChange = (selectedView: "map" | "list") => {
     setView(selectedView);
   };
+  const user = useUser();
 
   return (
     <>
@@ -20,10 +24,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-full flex-col items-center justify-start bg-zinc-100">
+        {user.isSignedIn && (
         <div className="container flex flex-col items-center justify-start gap-12 px-4 py-8">
           <MapListSelect onViewChange={handleViewChange} />
           {view === "map" ? <ProductMapView /> : <ProductListView />}
         </div>
+        )}
+        
+        {!user.isSignedIn && (
+        <div className="container flex flex-col items-center justify-start gap-12 px-4 py-8">
+          <SignedOutProductMapView />
+        </div>
+        )}
       </main>
     </>
   );

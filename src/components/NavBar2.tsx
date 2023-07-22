@@ -25,7 +25,7 @@ export function NavBar2() {
             <div className="relative ml-3">
             {!user.isSignedIn && (
                 <div className="text-gray-50 text-sm font-medium">
-                    <SignInButton />
+                    <SignInButton mode="modal"/>
                 </div>
             )}
             {user.isSignedIn && (
