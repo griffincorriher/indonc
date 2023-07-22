@@ -14,7 +14,8 @@ export default function ProductMapView(){
 
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: '400px', width: '800px' }}>
+    //<div style={{ height: '400px', width: '800px' }}>
+    <div className="w-full h-96 md:h-[38rem] ">
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultProps.center}
