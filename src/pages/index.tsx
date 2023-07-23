@@ -9,12 +9,11 @@ import SignedOutProductMapView from "~/components/SignedOutProductMapView";
 
 
 export default function Home() {
+  const user = useUser();
   const [view, setView] = useState<"map" | "list">("map");
-
   const handleViewChange = (selectedView: "map" | "list") => {
     setView(selectedView);
   };
-  const user = useUser();
 
   return (
     <>
